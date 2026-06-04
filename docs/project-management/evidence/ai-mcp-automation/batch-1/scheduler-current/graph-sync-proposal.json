@@ -1,0 +1,28 @@
+{
+  "schema": "larena.graph_sync_proposal.v1",
+  "package": "larena/scheduler",
+  "batch": "ai-mcp-automation/batch-1/scheduler-current",
+  "canonical_update_allowed": false,
+  "canonical_update_requested": false,
+  "source_launch_record": "specs/implementation-planning/launch-records/scheduler-batch-1-contract-skeletons-current.json",
+  "implemented_features": [
+    "scheduler.schedule_registry",
+    "scheduler.trigger_engine",
+    "scheduler.missed_run_policy",
+    "scheduler.locking",
+    "scheduler.queue_dispatch",
+    "scheduler.admin_center"
+  ],
+  "proposal": {
+    "type": "implementation_evidence_only",
+    "summary": "Record that scheduler batch 1 contract skeletons implement interface-first schedule boundaries without production scheduler runtime.",
+    "requires_graph_change": false
+  },
+  "future_considerations": [
+    "Define scheduler.yaml schema examples before registry runtime.",
+    "Define trigger expression parser and timezone policy fixtures before trigger runtime.",
+    "Define lock persistence and stale lock recovery before lock runtime.",
+    "Define signed web tick hardening fixtures before endpoint runtime.",
+    "Define queue dispatch handoff DTOs before queue dispatch runtime."
+  ]
+}

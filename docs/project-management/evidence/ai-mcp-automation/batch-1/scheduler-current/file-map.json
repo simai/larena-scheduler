@@ -1,0 +1,34 @@
+{
+  "schema": "larena.evidence_file_map.v1",
+  "package": "larena/scheduler",
+  "batch": "ai-mcp-automation/batch-1/scheduler-current",
+  "contract_files": [
+    "src/Contracts/DispatchPlan.php",
+    "src/Contracts/LockDecision.php",
+    "src/Contracts/MissedRunDecision.php",
+    "src/Contracts/ScheduleDescriptor.php",
+    "src/Contracts/ScheduleDiagnostic.php",
+    "src/Contracts/ScheduleRunResult.php",
+    "src/Contracts/SchedulerGateway.php",
+    "src/Contracts/TriggerDecision.php",
+    "src/Enums/MissedRunStrategy.php",
+    "src/Enums/ScheduleDecisionStatus.php",
+    "src/Enums/ScheduleState.php",
+    "src/Enums/TickSource.php"
+  ],
+  "test_files": [
+    "tests/Unit/SchedulerContractTest.php",
+    "tests/Unit/SchedulerFailsClosedTest.php"
+  ],
+  "evidence_files": [
+    "docs/project-management/evidence/ai-mcp-automation/batch-1/scheduler-current/README.md",
+    "docs/project-management/evidence/ai-mcp-automation/batch-1/scheduler-current/implementation-summary.md",
+    "docs/project-management/evidence/ai-mcp-automation/batch-1/scheduler-current/tests.md",
+    "docs/project-management/evidence/ai-mcp-automation/batch-1/scheduler-current/smoke.md",
+    "docs/project-management/evidence/ai-mcp-automation/batch-1/scheduler-current/file-map.json",
+    "docs/project-management/evidence/ai-mcp-automation/batch-1/scheduler-current/deviations.json",
+    "docs/project-management/evidence/ai-mcp-automation/batch-1/scheduler-current/graph-sync-proposal.json",
+    "docs/project-management/evidence/ai-mcp-automation/batch-1/scheduler-current/independent-review.md",
+    "docs/project-management/evidence/ai-mcp-automation/batch-1/scheduler-current/code-review-feedback.md"
+  ]
+}

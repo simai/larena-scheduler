@@ -1,0 +1,13 @@
+{
+  "schema": "larena.evidence_deviations.v1",
+  "package": "larena/scheduler",
+  "batch": "ai-mcp-automation/batch-1/scheduler-current",
+  "deviations": [],
+  "out_of_scope_confirmed": [
+    "No cron runner runtime was implemented.",
+    "No signed web tick endpoint runtime was implemented.",
+    "No queue dispatch runtime was implemented.",
+    "No schedule persistence runtime was implemented.",
+    "No persistence, admin UI, routes or migrations were implemented."
+  ]
+}
