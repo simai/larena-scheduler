@@ -1,0 +1,17 @@
+package: larena/scheduler
+title: Larena Scheduler
+status: repository_prepared
+cluster: ai-mcp-automation
+batch: batch-0-clean-pre-codegen-baseline
+features:
+  - scheduler.admin_center
+  - scheduler.locking
+  - scheduler.missed_run_policy
+  - scheduler.queue_dispatch
+  - scheduler.schedule_registry
+  - scheduler.trigger_engine
+runtime:
+  php: "^8.3"
+  laravel: "^13.0"
+evidence:
+  path: docs/project-management/evidence/ai-mcp-automation/batch-0/scheduler-clean-baseline/

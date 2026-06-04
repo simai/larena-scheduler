@@ -1,0 +1,11 @@
+{
+  "schema": "larena.package_specs_reference.v1",
+  "package": "larena/scheduler",
+  "specs_repo": "simai/larena-specs",
+  "specs_commit": "757a99ffaa351db55b29bb9ac6d7eb4a18d8e23c",
+  "package_spec": "specs/packages/scheduler/package.json",
+  "package_dna": "specs/packages/scheduler/dna.json",
+  "features_index": "specs/packages/scheduler/features.json",
+  "canonical_update_allowed": false,
+  "graph_sync_proposal_required": true
+}
