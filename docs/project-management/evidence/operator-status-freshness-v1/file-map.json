@@ -1,0 +1,6 @@
+{
+  "schema": "larena.scheduler.operator_status_freshness.file_map.v1",
+  "service": "src/Services/ScheduleOperations.php",
+  "regression": "tests/Unit/SchedulerRuntimeTest.php",
+  "evidence_root": "docs/project-management/evidence/operator-status-freshness-v1"
+}

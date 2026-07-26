@@ -2,7 +2,7 @@ package: larena/scheduler
 title: Larena Scheduler
 status: evidence_recorded
 cluster: operational-backend
-batch: scheduled-backup-recovery-drill-v1
+batch: operator-status-freshness-v1
 features:
   - scheduler.admin_center
   - scheduler.locking
@@ -14,4 +14,4 @@ runtime:
   php: "^8.3"
   laravel: "^13.0"
 evidence:
-  path: docs/project-management/evidence/scheduled-backup-recovery-drill-v1/
+  path: docs/project-management/evidence/operator-status-freshness-v1/

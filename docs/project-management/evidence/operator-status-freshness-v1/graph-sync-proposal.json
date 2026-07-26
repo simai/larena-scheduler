@@ -1,0 +1,6 @@
+{
+  "schema": "larena.graph_sync_proposal.v1",
+  "package": "larena/scheduler",
+  "proposal": "Record terminal Queue status freshness as part of scheduler.admin_center observability.",
+  "canonical_update_allowed": false
+}

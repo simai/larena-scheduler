@@ -59,8 +59,12 @@ if (!$codingStarted) {
 }
 
 if ($codingStarted) {
-    if (($launchContext['launch_record_ref'] ?? null) !== 'specs/implementation-planning/launch-records/scheduler-scheduled-backup-recovery-drill-v1.json') {
-        $errors[] = 'coding_started requires the Scheduled Backup & Recovery Drill v1 launch record.';
+    $allowedLaunchRecords = [
+        'specs/implementation-planning/launch-records/scheduler-scheduled-backup-recovery-drill-v1.json',
+        'specs/implementation-planning/launch-records/scheduler-operator-status-freshness-v1.json',
+    ];
+    if (!in_array((string) ($launchContext['launch_record_ref'] ?? ''), $allowedLaunchRecords, true)) {
+        $errors[] = 'coding_started requires an authorized Scheduler launch record.';
     }
 
     $requiredContractFiles = [

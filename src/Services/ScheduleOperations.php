@@ -13,6 +13,7 @@ use Larena\Scheduler\Data\ScheduleSnapshot;
 use Larena\Scheduler\Data\SchedulerOperationContext;
 use Larena\Scheduler\Enums\ScheduleState;
 use Larena\Scheduler\Persistence\DatabaseScheduleStore;
+use Larena\Scheduler\Runtime\ScheduledOperationRegistry;
 use Throwable;
 
 final readonly class ScheduleOperations
@@ -24,6 +25,7 @@ final readonly class ScheduleOperations
         private SchedulerAuditRecorder $audit,
         private DatabaseScheduleStore $store,
         private SchedulerClock $clock,
+        private ScheduledOperationRegistry $operations,
     ) {
     }
 
@@ -33,7 +35,10 @@ final readonly class ScheduleOperations
         $this->authorize($context, 'list');
         $this->audit->record($context, 'schedule', 'list', 'requested');
         try {
-            $schedules = $this->store->all(self::BACKUP_OPERATION);
+            $schedules = array_map(
+                fn (ScheduleSnapshot $schedule): ScheduleSnapshot => $this->refreshLastJob($schedule),
+                $this->store->all(self::BACKUP_OPERATION),
+            );
             $this->audit->record($context, 'schedule', 'list', 'succeeded', [
                 'result_count' => count($schedules),
             ]);
@@ -52,7 +57,7 @@ final readonly class ScheduleOperations
         $this->authorize($context, 'view', $id);
         $this->audit->record($context, 'schedule', 'view', 'requested', ['schedule_id' => $id]);
         try {
-            $schedule = $this->requireBackupSchedule($id);
+            $schedule = $this->refreshLastJob($this->requireBackupSchedule($id));
             $this->audit->record($context, 'schedule', 'view', 'succeeded', ['schedule_id' => $id]);
 
             return $schedule;
@@ -162,5 +167,35 @@ final readonly class ScheduleOperations
         }
 
         return $schedule;
+    }
+
+    private function refreshLastJob(ScheduleSnapshot $schedule): ScheduleSnapshot
+    {
+        if ($schedule->lastJobId === null) {
+            return $schedule;
+        }
+
+        try {
+            $job = $this->operations->handler($schedule->operationRef)->status($schedule->lastJobId);
+            $size = isset($job->result['size_bytes']) ? (int) $job->result['size_bytes'] : null;
+            if ($schedule->lastJobStatus === $job->status->value
+                && $schedule->lastResultSizeBytes === $size
+                && $schedule->lastFailureReason === $job->failureReason) {
+                return $schedule;
+            }
+            $this->store->refreshJob(
+                $schedule->id,
+                $job->status->value,
+                $size,
+                $job->failureReason,
+                $this->clock->now(),
+            );
+
+            return $this->store->require($schedule->id);
+        } catch (Throwable) {
+            // Historical jobs may have been removed by Queue retention. The
+            // schedule remains readable with its last durable projection.
+            return $schedule;
+        }
     }
 }

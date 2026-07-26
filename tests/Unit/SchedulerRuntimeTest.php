@@ -78,7 +78,6 @@ $authorizer = new class implements ActorOperationAuthorizer {
 };
 $recurrence = new ScheduleRecurrenceCalculator();
 $store = new DatabaseScheduleStore($capsule->getConnection(), $recurrence);
-$operations = new ScheduleOperations($authorizer, $audit, $store, $clock);
 $registry = new ScheduledOperationRegistry();
 $handler = new class implements ScheduledOperationHandler {
     /** @var array<string, QueueJobSnapshot> */
@@ -148,6 +147,7 @@ $handler = new class implements ScheduledOperationHandler {
     }
 };
 $registry->register($handler);
+$operations = new ScheduleOperations($authorizer, $audit, $store, $clock, $registry);
 $tick = new SchedulerTickService($store, $registry, $recurrence, $clock, $audit, 100, 60);
 $admin = new SchedulerOperationContext('user:admin', 'scheduler-runtime-test');
 
@@ -188,10 +188,24 @@ try {
     $clock->value = new DateTimeImmutable('2026-07-28T08:00:00Z');
     $second = $tick->tick('tick-runtime-2');
     scheduler_runtime_assert(count($second->decisions) === 1 && $second->decisions[0]['decision'] === 'dispatched', 'Terminal previous job must allow the next period.');
-    scheduler_runtime_assert($operations->find($admin, $schedule->id)->lastResultSizeBytes === 1234, 'Last result size must be projected into schedule diagnostics.');
+    $secondJobId = (string) $second->decisions[0]['job_id'];
+    $handler->setStatus($secondJobId, JobStatus::Completed);
+    $operations->disable($admin, $schedule->id);
+    $listed = array_values(array_filter(
+        $operations->all($admin),
+        static fn ($item): bool => $item->id === $schedule->id,
+    ));
+    scheduler_runtime_assert(
+        count($listed) === 1 && $listed[0]->lastJobStatus === JobStatus::Completed->value,
+        'Schedule list must refresh a terminal Queue status even after the schedule is disabled.',
+    );
+    $fresh = $operations->find($admin, $schedule->id);
+    scheduler_runtime_assert(
+        $fresh->lastJobStatus === JobStatus::Completed->value && $fresh->lastResultSizeBytes === 1234,
+        'Schedule detail must expose the fresh terminal status and result size.',
+    );
     scheduler_runtime_assert($capsule->getConnection()->table('larena_scheduler_runs')->count() === 3, 'Every due evaluation must be durably recorded once.');
 
-    $operations->disable($admin, $schedule->id);
     scheduler_runtime_assert($operations->find($admin, $schedule->id)->state->value === 'disabled', 'Admin must disable a schedule.');
     $operations->enable($admin, $schedule->id);
     scheduler_runtime_assert($operations->find($admin, $schedule->id)->state->value === 'enabled', 'Admin must re-enable a schedule.');
