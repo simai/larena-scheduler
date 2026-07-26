@@ -1,0 +1,6 @@
+{
+  "schema": "larena.scheduler.file_map.v1",
+  "runtime_roots": ["config", "database/migrations", "resources/lang", "routes", "src"],
+  "test_roots": ["tests/Unit"],
+  "evidence_root": "docs/project-management/evidence/scheduled-backup-recovery-drill-v1"
+}

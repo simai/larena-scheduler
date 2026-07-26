@@ -10,6 +10,15 @@
     }
   ],
   "require": {
+    "ext-json": "*",
+    "illuminate/console": "^13.0",
+    "illuminate/database": "^13.0",
+    "illuminate/http": "^13.0",
+    "illuminate/routing": "^13.0",
+    "illuminate/support": "^13.0",
+    "larena/access": "dev-main",
+    "larena/audit": "dev-main",
+    "larena/queue": "dev-main",
     "php": "^8.3"
   },
   "autoload": {
@@ -23,11 +32,25 @@
     }
   },
   "require-dev": {
+    "laravel/framework": "^13.0",
     "phpstan/phpstan": "^2.0"
   },
+  "repositories": [
+    {"type": "path", "url": "../access", "options": {"symlink": true}},
+    {"type": "path", "url": "../audit", "options": {"symlink": true}},
+    {"type": "path", "url": "../queue", "options": {"symlink": true}},
+    {"type": "path", "url": "../dataview", "options": {"symlink": true}},
+    {"type": "path", "url": "../layout", "options": {"symlink": true}},
+    {"type": "path", "url": "../ui", "options": {"symlink": true}}
+  ],
   "scripts": {
-    "test": "php scripts/test-placeholder.php",
-    "test:unit": "php scripts/test-placeholder.php",
+    "test": [
+      "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/SchedulerContractTest.php",
+      "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/SchedulerFailsClosedTest.php",
+      "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/ScheduleRecurrenceCalculatorTest.php",
+      "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/SchedulerRuntimeTest.php"
+    ],
+    "test:unit": "@test",
     "lint": "php scripts/lint.php",
     "analyse": "php scripts/analyse.php",
     "validate:larena": "php scripts/validate-larena-package.php",
@@ -44,8 +67,16 @@
   },
   "config": {
     "sort-packages": true,
-    "allow-plugins": {}
+    "allow-plugins": {},
+    "platform": {
+      "php": "8.3.31"
+    }
   },
-  "minimum-stability": "stable",
+  "extra": {
+    "laravel": {
+      "providers": ["Larena\\Scheduler\\Providers\\SchedulerServiceProvider"]
+    }
+  },
+  "minimum-stability": "dev",
   "prefer-stable": true
 }

@@ -1,8 +1,8 @@
 package: larena/scheduler
 title: Larena Scheduler
-status: repository_prepared
-cluster: ai-mcp-automation
-batch: batch-0-clean-pre-codegen-baseline
+status: evidence_recorded
+cluster: operational-backend
+batch: scheduled-backup-recovery-drill-v1
 features:
   - scheduler.admin_center
   - scheduler.locking
@@ -14,4 +14,4 @@ runtime:
   php: "^8.3"
   laravel: "^13.0"
 evidence:
-  path: docs/project-management/evidence/ai-mcp-automation/batch-0/scheduler-clean-baseline/
+  path: docs/project-management/evidence/scheduled-backup-recovery-drill-v1/

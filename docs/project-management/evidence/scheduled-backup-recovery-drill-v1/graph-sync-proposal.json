@@ -1,0 +1,13 @@
+{
+  "schema": "larena.graph_sync_proposal.v1",
+  "package": "larena/scheduler",
+  "capabilities": [
+    "scheduler.schedule_registry",
+    "scheduler.trigger_engine",
+    "scheduler.missed_run_policy",
+    "scheduler.locking",
+    "scheduler.queue_dispatch",
+    "scheduler.admin_center"
+  ],
+  "canonical_update_allowed": false
+}

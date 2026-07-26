@@ -73,7 +73,13 @@ foreach ($diffOutputs as $diffOutput) {
 }
 $errors = [];
 foreach (array_keys($changedFiles) as $file) {
-    $exactlyAllowed = in_array($file, $allowedFiles, true);
+    $exactlyAllowed = false;
+    foreach ($allowedFiles as $pattern) {
+        if (matches_pattern($file, $pattern)) {
+            $exactlyAllowed = true;
+            break;
+        }
+    }
     $evidenceAllowed = $evidencePath !== '' && str_starts_with($file, $evidencePath . '/');
     foreach (['src/', 'config/', 'database/', 'routes/', 'resources/', 'tests/', 'lang/'] as $runtimeRoot) {
         if (str_starts_with($file, $runtimeRoot) && !$codingStarted) {

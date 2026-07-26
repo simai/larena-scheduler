@@ -43,6 +43,7 @@ $allowedStatuses = [
     'repository_prepared_pending_review',
     'coding_started',
     'contract_skeleton_review_passed',
+    'evidence_recorded',
 ];
 if (!in_array((string) ($launchContext['status'] ?? ''), $allowedStatuses, true)) {
     $errors[] = 'launch-context status is not allowed for this package stage.';
@@ -58,8 +59,8 @@ if (!$codingStarted) {
 }
 
 if ($codingStarted) {
-    if (($launchContext['launch_record_ref'] ?? null) !== 'specs/implementation-planning/launch-records/scheduler-batch-1-contract-skeletons-current.json') {
-        $errors[] = 'coding_started requires the current scheduler batch 1 launch record.';
+    if (($launchContext['launch_record_ref'] ?? null) !== 'specs/implementation-planning/launch-records/scheduler-scheduled-backup-recovery-drill-v1.json') {
+        $errors[] = 'coding_started requires the Scheduled Backup & Recovery Drill v1 launch record.';
     }
 
     $requiredContractFiles = [
@@ -91,5 +92,5 @@ if ($errors !== []) {
     exit(1);
 }
 echo $codingStarted
-    ? "Larena Scheduler contract skeleton launch context is valid.\n"
+    ? "Larena Scheduler runtime launch context is valid.\n"
     : "Larena Scheduler clean pre-codegen baseline is valid.\n";

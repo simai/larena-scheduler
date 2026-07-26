@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+require dirname(__DIR__, 2).'/vendor/autoload.php';
+
 use Larena\Scheduler\Contracts\LockDecision;
 use Larena\Scheduler\Contracts\MissedRunDecision;
 use Larena\Scheduler\Contracts\TriggerDecision;
