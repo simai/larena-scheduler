@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you refer to Larena Scheduler, please cite it as below."
+title: "Larena Scheduler"
+abstract: "Larena Scheduler: Shared system package for declarative schedules, triggers, missed-run policy, locks, queue dispatch and schedule observability across Larena."
+type: software
+authors:
+  - family-names: "Zabarov"
+    given-names: "Rim"
+    email: "rim@zabarov.com"
+license: Apache-2.0
+repository-code: "https://github.com/simai/larena-scheduler"

@@ -18,7 +18,13 @@
     "scripts/validate-larena-package.php",
     "src/Services/ScheduleOperations.php",
     "tests/Unit/SchedulerRuntimeTest.php",
-    "docs/project-management/evidence/operator-status-freshness-v1/*"
+    "docs/project-management/evidence/operator-status-freshness-v1/*",
+    "LICENSE",
+    "NOTICE",
+    "AUTHORS",
+    "CITATION.cff",
+    "REUSE.toml",
+    "composer.json"
   ],
   "forbidden_files": [
     "composer.json",
