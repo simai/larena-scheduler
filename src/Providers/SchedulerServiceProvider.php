@@ -60,7 +60,8 @@ final class SchedulerServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([SchedulerTickCommand::class]);
         }
-        if ((bool) $config->get('larena-scheduler.admin_routes.enabled', true)) {
+        // The schedules' routes stand under the admin, as backup's and update's do: a node without it has none.
+        if (class_exists(\Larena\Admin\Navigation\AdminNavigationRegistry::class) && (bool) $config->get('larena-scheduler.admin_routes.enabled', true)) {
             $this->app->make('router')
                 ->middleware((array) $config->get('larena-scheduler.admin_routes.middleware'))
                 ->prefix((string) $config->get('larena-scheduler.admin_routes.prefix', 'admin/scheduler'))

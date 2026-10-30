@@ -24,7 +24,8 @@
     "AUTHORS",
     "CITATION.cff",
     "REUSE.toml",
-    "composer.json"
+    "composer.json",
+    "src/Providers/SchedulerServiceProvider.php"
   ],
   "forbidden_files": [
     "composer.json",
