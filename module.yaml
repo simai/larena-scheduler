@@ -15,3 +15,18 @@ runtime:
   laravel: "^13.0"
 evidence:
   path: docs/project-management/evidence/operator-status-freshness-v1/
+delivery:
+  publisher: simai
+  distribution: open
+  license: Apache-2.0
+  requires:
+    larena: dev-main
+    packages:
+      larena/access: dev-main
+      larena/audit: dev-main
+      larena/queue: dev-main
+  capabilities:
+    - larena.capability.scheduler.base
+  requires_capabilities: []
+  data_on_removal: kept_read_only
+  migrations_reversible: true

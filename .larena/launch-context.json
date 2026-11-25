@@ -26,7 +26,8 @@
     "REUSE.toml",
     "composer.json",
     "src/Providers/SchedulerServiceProvider.php",
-    "resources/lang/ru/operations.php"
+    "resources/lang/ru/operations.php",
+    "scripts/check-delivery-manifest.php"
   ],
   "forbidden_files": [
     "composer.json",
